@@ -63,27 +63,53 @@
                                         <a href="#"
                                             class="noble-ui-logo logo-light d-block mb-2">My-<span>Portfolio</span></a>
                                         <h5 class="text-muted fw-normal mb-4">Welcome back! Log in to your account.</h5>
+
+                                        @if(session('status'))
+                                            <div class="alert alert-success" role="alert">
+                                                {{ session('status') }}
+                                            </div>
+                                        @endif
+
                                         <form class="forms-sample" method="POST" action="{{ route('login') }}">
                                             @csrf
+
                                             <div class="mb-3">
                                                 <label for="userEmail" class="form-label">Username</label>
-                                                <input type="text" class="form-control" name="username"
+                                                <input type="text"
+                                                    class="form-control @error('username') is-invalid @enderror"
+                                                    name="username" value="{{ old('username') }}"
                                                     placeholder="Username">
+
+                                                @error('username')
+                                                    <span class="text-danger"> {{ $message }} </span>
+                                                @enderror
                                             </div>
+
                                             <div class="mb-3">
                                                 <label for="userPassword" class="form-label">Password</label>
-                                                <input type="password" class="form-control" name="password"
-                                                    autocomplete="current-password" placeholder="Password">
+                                                <input type="password"
+                                                    class="form-control @error('password') is-invalid @enderror"
+                                                    name="password" autocomplete="current-password"
+                                                    placeholder="Password">
+
+                                                @error('password')
+                                                    <span class="text-danger"> {{ $message }} </span>
+                                                @enderror
                                             </div>
 
                                             <div>
-
                                                 <button type="submit"
-                                                    class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">Login</button>
+                                                    class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
+                                                    Login
+                                                </button>
                                             </div>
-                                            <a href="register.html" class="d-block mt-3 text-muted"
-                                                style="text-decoration: underline">Forgot Your Password?</a>
+
+                                            <a href="{{ route('password.request') }}" class="d-block mt-3 text-muted"
+                                                style="text-decoration: underline">
+                                                Forgot Your Password?
+                                            </a>
                                         </form>
+
                                     </div>
                                 </div>
                             </div>
