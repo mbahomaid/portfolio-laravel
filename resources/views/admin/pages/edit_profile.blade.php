@@ -25,7 +25,7 @@
                     <div class="row mb-3">
                         <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Profile Photo</label>
                         <div class="col-sm-9">
-                            <input class="form-control" type="file" id="formFile">
+                            <input class="form-control" type="file" id="Image">
                         </div>
                     </div>
 
@@ -35,7 +35,8 @@
                     <div class="row mb-3">
                         <label for="exampleInputEmail2" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <img src="{{ asset('uploads/no-img-avatar.png') }}" alt="" style="width:90px; height: 90px;">
+                            <img id="ShowImage" src="{{ asset('uploads/no-img-avatar.png') }}" alt=""
+                                style="width:90px; height: 90px;">
 
                         </div>
                     </div>
@@ -46,4 +47,16 @@
         </div>
     </div>
 
+
+    <script>
+        $(document).ready(function () {
+            $('#Image').on('change', function (e) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#ShowImage').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(e.target.files['0']);
+            });
+        })
+    </script>
 @endsection
