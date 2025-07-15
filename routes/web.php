@@ -8,11 +8,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('admin.pages.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.pages.index');
+    })->middleware(['verified'])->name('dashboard');
 
-Route::get('admin/logout', [AdminController::class,'AdminLogout'])->name('admin.logout');
+    Route::get('admin/logout', [AdminController::class, 'AdminLogout'])->name('admin.logout');
+
+    Route::get('admin-edit-profile', [AdminController::class, 'AdminEditProfile'])->name(name: 'admin.edit.profile');
+    
+
+
+});
+
+
+
 
 
 
@@ -41,4 +51,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -17,5 +18,11 @@ class AdminController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/login');
+    }
+    public function AdminEditProfile()
+    {
+        $admin = User::find(Auth::user()->id);
+
+        return view('admin.pages.edit_profile', compact('admin'));
     }
 }
